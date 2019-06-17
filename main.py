@@ -55,7 +55,7 @@ class CoinmarketcapSpider:
 			print("curtime_is:" + curtime)
 			assert datetime.utcfromtimestamp(curts).strftime('%Y-%m-%d') == curtime
 
-
+		assert self.sizeofjson < 10240
 			
 		
 	
