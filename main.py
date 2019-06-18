@@ -4,7 +4,7 @@ import time
 import sys
 from datetime import datetime
 from multiprocessing import Pool
-#import multiprocessing
+import numpy as np
 
 class CoinmarketcapSpider:
 
@@ -77,8 +77,22 @@ if __name__ == "__main__":
 
 
 	results = []
-	with Pool(2) as pool:
-		pool.map(first_test_case, itterable_list)
+	start_time = time.time()
+	with Pool(8) as pool:
+		results = pool.map(first_test_case, itterable_list)
+	delta_time = time.time() - start_time
+
+	rps = 8/delta_time
+	assert rps > 5
+
+	ar_percentile80 = np.array(results)
+	percentile80 = np.percentile(ar_percentile80, 80)
+	assert percentile80 < 0.45
+
+	print(results)
+	print(delta_time)
+	print(rps)
+	print(percentile80)
 
 
 
